@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Naszefirmies list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa</th>
+                <th>Adres</th>
+                <th>Miasto</th>
+                <th>Kodpocztowy</th>
+                <th>Nip</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for naszeFirmy in naszeFirmies %}
+            <tr>
+                <td><a href="{{ path('naszefirmy_show', { 'id': naszeFirmy.id }) }}">{{ naszeFirmy.id }}</a></td>
+                <td>{{ naszeFirmy.nazwa }}</td>
+                <td>{{ naszeFirmy.adres }}</td>
+                <td>{{ naszeFirmy.miasto }}</td>
+                <td>{{ naszeFirmy.kodPocztowy }}</td>
+                <td>{{ naszeFirmy.nip }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('naszefirmy_show', { 'id': naszeFirmy.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('naszefirmy_edit', { 'id': naszeFirmy.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('naszefirmy_new') }}">Create a new naszeFirmy</a>
+        </li>
+    </ul>
+{% endblock %}

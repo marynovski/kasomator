@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Operacje</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ operacje.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ operacje.type }}</td>
+            </tr>
+            <tr>
+                <th>Dataoperacji</th>
+                <td>{% if operacje.dataOperacji %}{{ operacje.dataOperacji|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dataksiegowania</th>
+                <td>{% if operacje.dataKsiegowania %}{{ operacje.dataKsiegowania|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Opisoperacji</th>
+                <td>{{ operacje.opisOperacji }}</td>
+            </tr>
+            <tr>
+                <th>Tytul</th>
+                <td>{{ operacje.tytul }}</td>
+            </tr>
+            <tr>
+                <th>Kontrahent</th>
+                <td>{{ operacje.kontrahent }}</td>
+            </tr>
+            <tr>
+                <th>Nrkonta</th>
+                <td>{{ operacje.nrKonta }}</td>
+            </tr>
+            <tr>
+                <th>Kwota</th>
+                <td>{{ operacje.kwota }}</td>
+            </tr>
+            <tr>
+                <th>Saldopooperacji</th>
+                <td>{{ operacje.saldoPoOperacji }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('wyplatygotowkowe_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

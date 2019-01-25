@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Operacjes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Dataoperacji</th>
+                <th>Dataksiegowania</th>
+                <th>Opisoperacji</th>
+                <th>Tytul</th>
+                <th>Kontrahent</th>
+                <th>Nrkonta</th>
+                <th>Kwota</th>
+                <th>Saldopooperacji</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for operacje in operacjes %}
+            <tr>
+                <td><a href="{{ path('wyplatygotowkowe_show', { 'id': operacje.id }) }}">{{ operacje.id }}</a></td>
+                <td>{{ operacje.type }}</td>
+                <td>{% if operacje.dataOperacji %}{{ operacje.dataOperacji|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if operacje.dataKsiegowania %}{{ operacje.dataKsiegowania|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ operacje.opisOperacji }}</td>
+                <td>{{ operacje.tytul }}</td>
+                <td>{{ operacje.kontrahent }}</td>
+                <td>{{ operacje.nrKonta }}</td>
+                <td>{{ operacje.kwota }}</td>
+                <td>{{ operacje.saldoPoOperacji }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('wyplatygotowkowe_show', { 'id': operacje.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('wyplatygotowkowe_new') }}">Create a new operacje</a>
+        </li>
+    </ul>
+{% endblock %}

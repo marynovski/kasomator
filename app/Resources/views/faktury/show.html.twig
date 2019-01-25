@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Faktury</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ faktury.id }}</td>
+            </tr>
+            <tr>
+                <th>Rodzaj</th>
+                <td>{{ faktury.rodzaj }}</td>
+            </tr>
+            <tr>
+                <th>Naszafirmaid</th>
+                <td>{{ faktury.naszaFirmaId }}</td>
+            </tr>
+            <tr>
+                <th>Kontrahent</th>
+                <td>{{ faktury.kontrahent }}</td>
+            </tr>
+            <tr>
+                <th>Numer</th>
+                <td>{{ faktury.numer }}</td>
+            </tr>
+            <tr>
+                <th>Datawystawienia</th>
+                <td>{% if faktury.dataWystawienia %}{{ faktury.dataWystawienia|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Kontrahentnrkonta</th>
+                <td>{{ faktury.kontrahentNrKonta }}</td>
+            </tr>
+            <tr>
+                <th>Kwotanetto</th>
+                <td>{{ faktury.kwotaNetto }}</td>
+            </tr>
+            <tr>
+                <th>Kwotabrutto</th>
+                <td>{{ faktury.kwotaBrutto }}</td>
+            </tr>
+            <tr>
+                <th>Kwotavat</th>
+                <td>{{ faktury.kwotaVat }}</td>
+            </tr>
+            <tr>
+                <th>Opis</th>
+                <td>{{ faktury.opis }}</td>
+            </tr>
+            <tr>
+                <th>Formaplatnosci</th>
+                <td>{{ faktury.formaPlatnosci }}</td>
+            </tr>
+            <tr>
+                <th>Plikskanfaktury</th>
+                <td>{{ faktury.plikSkanFaktury }}</td>
+            </tr>
+            <tr>
+                <th>Czyzaplacono</th>
+                <td>{% if faktury.czyZaplacono %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('faktury_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('faktury_edit', { 'id': faktury.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Fakturies list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rodzaj</th>
+                <th>Naszafirmaid</th>
+                <th>Kontrahent</th>
+                <th>Numer</th>
+                <th>Datawystawienia</th>
+                <th>Kontrahentnrkonta</th>
+                <th>Kwotanetto</th>
+                <th>Kwotabrutto</th>
+                <th>Kwotavat</th>
+                <th>Opis</th>
+                <th>Formaplatnosci</th>
+                <th>Plikskanfaktury</th>
+                <th>Czyzaplacono</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for faktury in fakturies %}
+            <tr>
+                <td><a href="{{ path('faktury_show', { 'id': faktury.id }) }}">{{ faktury.id }}</a></td>
+                <td>{{ faktury.rodzaj }}</td>
+                <td>{{ faktury.naszaFirmaId }}</td>
+                <td>{{ faktury.kontrahent }}</td>
+                <td>{{ faktury.numer }}</td>
+                <td>{% if faktury.dataWystawienia %}{{ faktury.dataWystawienia|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ faktury.kontrahentNrKonta }}</td>
+                <td>{{ faktury.kwotaNetto }}</td>
+                <td>{{ faktury.kwotaBrutto }}</td>
+                <td>{{ faktury.kwotaVat }}</td>
+                <td>{{ faktury.opis }}</td>
+                <td>{{ faktury.formaPlatnosci }}</td>
+                <td>{{ faktury.plikSkanFaktury }}</td>
+                <td>{% if faktury.czyZaplacono %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('faktury_show', { 'id': faktury.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('faktury_edit', { 'id': faktury.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('faktury_new') }}">Create a new faktury</a>
+        </li>
+    </ul>
+{% endblock %}
