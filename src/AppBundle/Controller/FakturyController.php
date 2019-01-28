@@ -77,6 +77,13 @@ class FakturyController extends Controller
      */
     public function newAction(Request $request)
     {
+        if (isset($_POST['valueKey'])) {
+            $zaplacone = $_POST['valueKey'];
+            echo $zaplacone;
+            die();
+        }
+
+
         $faktury = new Faktury();
         $form = $this->createForm('AppBundle\Form\FakturyType', $faktury);
         $form->handleRequest($request);
@@ -86,6 +93,12 @@ class FakturyController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($faktury);
+
+            $rodzaj = $form["rodzaj"]->getData();
+            $firma = $form["naszaFirmaId"]->getData();
+            $firmaId = $firma->getId();
+            var_dump($rodzaj);
+            var_dump($firmaId);
             $em->flush();
 
             return $this->redirectToRoute('faktury_show', array('id' => $faktury->getId()));

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Projekties list</h1>
+    <h1>Projekty</h1>
 
     <table>
         <thead>
@@ -19,7 +19,7 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('projekty_show', { 'id': projekty.id }) }}">show</a>
+                            <a href="{{ path('projekty_show', { 'id': projekty.id }) }}">Pokaż</a>
                         </li>
                         {#<li>#}
                             {#<a href="{{ path('projekty_edit', { 'id': projekty.id }) }}">edit</a>#}
@@ -33,7 +33,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('projekty_new') }}">Create a new projekty</a>
+            <a href="{{ path('projekty_new') }}">Dodaj projekt</a>
         </li>
     </ul>
 {% endblock %}

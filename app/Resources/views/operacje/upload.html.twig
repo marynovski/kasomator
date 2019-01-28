@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Wyciagibankowe upload</h1>
+    <h1>Plik wyciągu bankowego</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -10,7 +10,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('wyciagibankowe_index') }}">Back to the list</a>
+            <a href="{{ path('wyciagibankowe_index') }}">Operacje</a>
         </li>
     </ul>
 {% endblock %}

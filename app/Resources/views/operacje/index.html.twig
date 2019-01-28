@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Operacjes list</h1>
+    <h1>Operacje</h1>
 
     <table>
         <thead>
@@ -35,10 +35,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('wyplatygotowkowe_show', { 'id': operacje.id }) }}">show</a>
+                            <a href="{{ path('wyplatygotowkowe_show', { 'id': operacje.id }) }}">Pokaż</a>
                         </li>
                         <li>
-                            <a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">edit</a>
+                            <a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">Edytuj</a>
                         </li>
                     </ul>
                 </td>
@@ -49,7 +49,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('wyplatygotowkowe_new') }}">Create a new operacje</a>
+            <a href="{{ path('wyplatygotowkowe_new') }}">Nowa operacja</a>
         </li>
     </ul>
 {% endblock %}

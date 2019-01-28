@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    <h1>Faktury creation</h1>
+    <h1>Nowa faktura</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -13,4 +12,22 @@
             <a href="{{ path('faktury_index') }}">Back to the list</a>
         </li>
     </ul>
+
+{% endblock %}
+{% block javascripts %}
+
+    $('select').on('change', function() {
+
+    var zaplacone = this.value;
+
+        if (zaplacone == 0) {
+
+            $.ajax({
+                type:"POST",
+                url:"{{ path( 'faktury_new' ) }},
+                data: {valueKey:zaplacone},
+            });
+        }
+    });
+
 {% endblock %}

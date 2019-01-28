@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Naszefirmy edit</h1>
+    <h1>Edycja</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" value="Edytuj" />
     {{ form_end(edit_form) }}
 
     <ul>
         <li>
-            <a href="{{ path('naszefirmy_index') }}">Back to the list</a>
+            <a href="{{ path('naszefirmy_index') }}">Lista firm</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Usuń">
             {{ form_end(delete_form) }}
         </li>
     </ul>

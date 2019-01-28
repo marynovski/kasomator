@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Naszefirmies list</h1>
+    <h1>Lista firm</h1>
 
     <table>
         <thead>
@@ -27,10 +27,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('naszefirmy_show', { 'id': naszeFirmy.id }) }}">show</a>
+                            <a href="{{ path('naszefirmy_show', { 'id': naszeFirmy.id }) }}">Pokaż</a>
                         </li>
                         <li>
-                            <a href="{{ path('naszefirmy_edit', { 'id': naszeFirmy.id }) }}">edit</a>
+                            <a href="{{ path('naszefirmy_edit', { 'id': naszeFirmy.id }) }}">Edytuj</a>
                         </li>
                     </ul>
                 </td>
@@ -41,7 +41,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('naszefirmy_new') }}">Create a new naszeFirmy</a>
+            <a href="{{ path('naszefirmy_new') }}">Nowa firma</a>
         </li>
     </ul>
 {% endblock %}

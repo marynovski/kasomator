@@ -5,9 +5,13 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script type="text/javascript">
         {% block javascripts %}{% endblock %}
+        </script>
     </body>
 </html>
