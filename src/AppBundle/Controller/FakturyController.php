@@ -9,7 +9,9 @@ use GusApi\GusApi;
 use GusApi\ReportTypes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Faktury controller.
@@ -18,6 +20,49 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class FakturyController extends Controller
 {
+
+    /**
+     * @Route("/stat_gov_nip", name="faktury_stat_gov_nip", options={"expose": true})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function statGovNipAjaxAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException('Not XHR.');
+        }
+        $em = $this->getDoctrine()->getManager();
+
+        $nip = $request->request->get('nip');
+
+        $return_msg = ['msg' => 'FAIL'];
+
+        if (!empty($nip)) {
+            $gus = new GusApi('a137213445434e769901');
+            $return_msg = ['msg' => 'OK'];
+            try {
+                $nipToCheck = $nip; //change to valid nip value
+                $gus->login();
+
+                $gusReports = $gus->getByNip($nipToCheck);
+
+                foreach ($gusReports as $gusReport) {
+                    //you can change report type to other one
+                    $reportType = ReportTypes::REPORT_PUBLIC_LAW;
+                    $fullReport = $gus->getFullReport($gusReport, $reportType);
+//                    print_r($fullReport);
+
+                    $return_msg['response'] = $fullReport[0];
+                }
+            } catch (InvalidUserKeyException $e) {}
+              catch (\GusApi\Exception\NotFoundException $e) {
+                  $return_msg['msg'] = $gus->getResultSearchMessage();
+            }
+        }
+
+        return new JsonResponse($return_msg);
+    }
+
     /**
      * Lists all faktury entities.
      *
@@ -186,4 +231,6 @@ class FakturyController extends Controller
             ->getForm()
         ;
     }
+
+
 }

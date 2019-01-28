@@ -3,31 +3,61 @@
     <h1>Nowa faktura</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
+    <input type="submit" value="Create"/>
     {{ form_end(form) }}
 
     <ul>
         <li>
-            <a href="{{ path('faktury_index') }}">Back to the list</a>
+            <a href="{{ path('faktury_index') }}">Lista faktur</a>
         </li>
     </ul>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).on('blur', '#appbundle_faktury_kontrahentNip', function (e) {
+                e.preventDefault();
+                let value = $(this).val();
 
-{% endblock %}
-{% block javascripts %}
+                // console.log("dsad", value);
+                // $(this).attr('disabled', true);
+                // $(this).addClass('button-disabled');
 
-    $('select').on('change', function() {
+                $.ajax({
+                    url: '{{ (path('faktury_stat_gov_nip')) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        nip: value
+                    },
+                    async: true,
+                }).done(function (data) {
+                    console.log(data);
+                    if (data.msg == 'OK' && data.response) {
+                        console.log(data.response);
+                        // alert('submit');
+                        // that.off('submit').submit();
 
-    var zaplacone = this.value;
+                        $('#appbundle_faktury_kontrahentNazwa').val(data.response.praw_nazwa);
+                        $('#appbundle_faktury_kontrahentAdres').val(data.response.praw_adSiedzUlica_Nazwa+' '+data.response.praw_adSiedzNumerNieruchomosci+' '+data.response.praw_adSiedzNumerLokalu);
+                        $('#appbundle_faktury_kontrahentMiasto').val(data.response.praw_adSiedzMiejscowosc_Nazwa);
+                        $('#appbundle_faktury_kontrahentKodPocztowy').val(data.response.praw_adSiedzKodPocztowy);
 
-        if (zaplacone == 0) {
+                    } else {
+                        // alert(data.msg);
+                        // $('#call_return_info').html('');
+                    }
+                }).fail(function () {
+                    console.warn("FAIL FAIL");
+                    // $('#call_return_info').html('FAIL! FAIL');
+                });
 
-            $.ajax({
-                type:"POST",
-                url:"{{ path( 'faktury_new' ) }},
-                data: {valueKey:zaplacone},
+                return true;
+
+                // console.warn(keywords);
+                // that.off('submit').submit();
+
             });
-        }
-    });
 
+        });
+    </script>
 {% endblock %}

@@ -38,9 +38,37 @@ class Faktury
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent", type="text")
+     * @ORM\Column(name="kontrahent_nip", type="string", length=255)
      */
-    private $kontrahent;
+    private $kontrahentNip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kontrahent_nazwa", type="string", length=255)
+     */
+    private $kontrahentNazwa;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kontrahent_adres", type="string", length=255)
+     */
+    private $kontrahentAdres;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kontrahent_miasto", type="string", length=255)
+     */
+    private $kontrahentMiasto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kontrahent_kod_pocztowy", type="string", length=255)
+     */
+    private $kontrahentKodPocztowy;
 
     /**
      * @var string
@@ -186,28 +214,86 @@ class Faktury
     }
 
     /**
-     * Set kontrahent
-     *
-     * @param string $kontrahent
-     *
-     * @return Faktury
+     * @return string
      */
-    public function setKontrahent($kontrahent)
+    public function getKontrahentNip()
     {
-        $this->kontrahent = $kontrahent;
-
-        return $this;
+        return $this->kontrahentNip;
     }
 
     /**
-     * Get kontrahent
-     *
+     * @param string $kontrahentNip
+     */
+    public function setKontrahentNip($kontrahentNip)
+    {
+        $this->kontrahentNip = $kontrahentNip;
+    }
+
+    /**
      * @return string
      */
-    public function getKontrahent()
+    public function getKontrahentNazwa()
     {
-        return $this->kontrahent;
+        return $this->kontrahentNazwa;
     }
+
+    /**
+     * @param string $kontrahentNazwa
+     */
+    public function setKontrahentNazwa($kontrahentNazwa)
+    {
+        $this->kontrahentNazwa = $kontrahentNazwa;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKontrahentAdres()
+    {
+        return $this->kontrahentAdres;
+    }
+
+    /**
+     * @param string $kontrahentAdres
+     */
+    public function setKontrahentAdres($kontrahentAdres)
+    {
+        $this->kontrahentAdres = $kontrahentAdres;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKontrahentMiasto()
+    {
+        return $this->kontrahentMiasto;
+    }
+
+    /**
+     * @param string $kontrahentMiasto
+     */
+    public function setKontrahentMiasto($kontrahentMiasto)
+    {
+        $this->kontrahentMiasto = $kontrahentMiasto;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKontrahentKodPocztowy()
+    {
+        return $this->kontrahentKodPocztowy;
+    }
+
+    /**
+     * @param string $kontrahentKodPocztowy
+     */
+    public function setKontrahentKodPocztowy($kontrahentKodPocztowy)
+    {
+        $this->kontrahentKodPocztowy = $kontrahentKodPocztowy;
+    }
+
+
 
     /**
      * Set numer

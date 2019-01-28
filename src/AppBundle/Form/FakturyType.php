@@ -11,10 +11,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
+
 
 class FakturyType extends AbstractType
 {
@@ -50,10 +56,49 @@ class FakturyType extends AbstractType
                     'label' => 'Obciążana firma',
                 ]
             )
-            ->add('kontrahent')
+            ->add('kontrahentNip', TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
+            ->add('kontrahentNazwa', TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
+            ->add('kontrahentAdres', TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
+            ->add('kontrahentMiasto', TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
+            ->add('kontrahentKodPocztowy', TextType::class,
+                [
+                    'required' => true,
+                ]
+            )
             ->add('numer')
             ->add('dataWystawienia')
-            ->add('kontrahentNrKonta')
+            ->add('kontrahentNrKonta',
+                TextType::class,
+                [
+                    'constraints' => [
+                        new NotBlank(),
+                        new Type('string'),
+                        new Regex(
+                            [
+                                'pattern' => '/^[0-9]{26}$/',
+                                'message' => 'tylko poprawny numer konta'
+                            ]
+                        ),
+                        new Length(['min' => 0])
+                    ]
+                ]
+            )
             ->add('kwotaNetto')
             ->add('kwotaBrutto')
             ->add('kwotaVat')
