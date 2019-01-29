@@ -8,19 +8,23 @@
             <tr>
                 <th>Id</th>
                 <th>Rodzaj</th>
-                <th>Naszafirmaid</th>
-                <th>Kontrahent</th>
+                <th>Nasza firma id</th>
+                <th>NIP Kontrahenta</th>
+                <th>Nazwa Kontrahenta</th>
+                <th>Adres Kontrahenta</th>
+                <th>Miasto Kontrahenta</th>
+                <th>Kod pocztowy Kontrahenta</th>
                 <th>Numer</th>
-                <th>Datawystawienia</th>
-                <th>Kontrahentnrkonta</th>
-                <th>Kwotanetto</th>
-                <th>Kwotabrutto</th>
-                <th>Kwotavat</th>
+                <th>Data wystawienia</th>
+                <th>Kontrahent nr konta</th>
+                <th>Kwota netto</th>
+                <th>Kwota brutto</th>
+                <th>Kwota vat</th>
                 <th>Opis</th>
-                <th>Formaplatnosci</th>
-                <th>Plikskanfaktury</th>
-                <th>Czyzaplacono</th>
-                <th>Actions</th>
+                <th>Forma platnosci</th>
+                <th>Plik skan faktury</th>
+                <th>Czy zaplacono</th>
+                <th>Działania</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +33,11 @@
                 <td><a href="{{ path('faktury_show', { 'id': faktury.id }) }}">{{ faktury.id }}</a></td>
                 <td>{{ faktury.rodzaj }}</td>
                 <td>{{ faktury.naszaFirmaId }}</td>
-                <td>{{ faktury.kontrahent }}</td>
+                <td>{{ faktury.kontrahentNip }}</td>
+                <td>{{ faktury.kontrahentNazwa }}</td>
+                <td>{{ faktury.kontrahentAdres }}</td>
+                <td>{{ faktury.kontrahentMiasto }}</td>
+                <td>{{ faktury.kontrahentKodPocztowy }}</td>
                 <td>{{ faktury.numer }}</td>
                 <td>{% if faktury.dataWystawienia %}{{ faktury.dataWystawienia|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ faktury.kontrahentNrKonta }}</td>
@@ -57,7 +65,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('faktury_new') }}">Create a new faktury</a>
+            <a href="{{ path('faktury_new') }}">Nowa faktura</a>
         </li>
     </ul>
 {% endblock %}

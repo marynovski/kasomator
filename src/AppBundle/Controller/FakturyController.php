@@ -4,12 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Faktury;
 use AppBundle\Entity\Projekty;
+use AppBundle\Helper\FakturyTypes;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,6 +66,28 @@ class FakturyController extends Controller
     }
 
     /**
+     * @Route("/czy_zaplacono", name="faktury_czy_zaplacono", options={"expose": true})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function czyZaplaconoAjaxAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException('Not XHR.');
+        }
+        $em = $this->getDoctrine()->getManager();
+
+        $czyZaplacono = $request->request->get('czyZaplacono');
+        if ($czyZaplacono == 0) {
+            $return_msg['response'] = $fullReport[0];
+        } else {
+            $return_msg = ['msg' => 'FAIL'];
+        }
+
+        return new JsonResponse($return_msg);
+    }
+
+    /**
      * Lists all faktury entities.
      *
      * @Route("/", name="faktury_index")
@@ -85,9 +109,9 @@ class FakturyController extends Controller
             foreach ($gusReports as $gusReport) {
                 //you can change report type to other one
                 $reportType = ReportTypes::REPORT_PUBLIC_LAW;
-                echo $gusReport->getName();
+//                echo $gusReport->getName();
                 $fullReport = $gus->getFullReport($gusReport, $reportType);
-                var_dump($fullReport);
+//                var_dump($fullReport);
             }
         } catch (InvalidUserKeyException $e) {
             echo 'Bad user key';
@@ -122,30 +146,88 @@ class FakturyController extends Controller
      */
     public function newAction(Request $request)
     {
-        if (isset($_POST['valueKey'])) {
-            $zaplacone = $_POST['valueKey'];
-            echo $zaplacone;
-            die();
-        }
+
 
 
         $faktury = new Faktury();
         $form = $this->createForm('AppBundle\Form\FakturyType', $faktury);
         $form->handleRequest($request);
 
-        $faktury->setProjekt(new Projekty());
+//        $faktury->setProjekt(new Projekty());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($faktury);
 
-            $rodzaj = $form["rodzaj"]->getData();
-            $firma = $form["naszaFirmaId"]->getData();
-            $firmaId = $firma->getId();
-            var_dump($rodzaj);
-            var_dump($firmaId);
+
+            if (!empty($_FILES['appbundle_faktury']) && $_FILES['appbundle_faktury']['size']['plikSkanFaktury'] > 0) {
+                /** @var UploadedFile $file */
+                $file = $faktury->getPlikSkanFaktury();
+                $fileName = $this->get('faktury_uploader')->upload($file);
+                $faktury->setPlikSkanFaktury($fileName);
+            }
+
+            $rodzaj                 = $form['rodzaj']->getData();
+
+            $naszaFirmaId           = $form['naszaFirmaId']->getData()->getId();
+
+            $kontrahentNip          = $form['kontrahentNip']->getData();
+            $kontrahentNazwa        = $form['kontrahentNazwa']->getData();
+            $kontrahentAdres        = $form['kontrahentAdres']->getData();
+            $kontrahentMiasto       = $form['kontrahentMiasto']->getData();
+            $kontrahentKodPocztowy  = $form['kontrahentKodPocztowy']->getData();
+
+            $numer                  = $form['numer']->getData();
+            $dataWystawienia        = $form['dataWystawienia']->getData();
+            $kontrahentNrKonta      = $form['kontrahentNrKonta']->getData();
+
+            $kwotaNetto             = $form['kwotaNetto']->getData();
+            $kwotaBrutto            = $form['kwotaBrutto']->getData();
+            $kwotaVat               = $form['kwotaVat']->getData();
+
+            $opis                   = $form['opis']->getData();
+
+            $formaPlatnosci         = $form['formaPlatnosci']->getData();
+
+            $plikSkanFaktury        = $form['plikSkanFaktury']->getData();
+
+            $czyZaplacono           = $form['czyZaplacono']->getData();
+            $terminPlatnosci        = $form['terminPlatnosci']->getData();
+            $projekt                = $form['projekt']->getData()->getId();
+
+            $fakturyEntity = $faktury;
+            $fakturyEntity->setNaszaFirmaId($naszaFirmaId);
+            $fakturyEntity->setKontrahentNip($kontrahentNip);
+            $fakturyEntity->setKontrahentNazwa($kontrahentNazwa);
+            $fakturyEntity->setKontrahentAdres($kontrahentAdres);
+            $fakturyEntity->setKontrahentMiasto($kontrahentMiasto);
+            $fakturyEntity->setKontrahentKodPocztowy($kontrahentKodPocztowy);
+            $fakturyEntity->setNumer($numer);
+            $fakturyEntity->setDataWystawienia($dataWystawienia);
+            $fakturyEntity->setKontrahentNrKonta($kontrahentNrKonta);
+            $fakturyEntity->setRodzaj($rodzaj);
+
+            if ($rodzaj == FakturyTypes::ZAGRANICZNA) {
+                $fakturyEntity->setKwotaNetto($kwotaBrutto);
+                $fakturyEntity->setKwotaBrutto($kwotaBrutto);
+                $fakturyEntity->setKwotaVat(0);
+            } else {
+                $fakturyEntity->setKwotaNetto($kwotaNetto);
+                $fakturyEntity->setKwotaBrutto($kwotaBrutto);
+                $fakturyEntity->setKwotaVat($kwotaVat);
+            }
+            $fakturyEntity->setOpis($opis);
+            $fakturyEntity->setFormaPlatnosci($formaPlatnosci);
+//            $fakturyEntity->setPlikSkanFaktury(1);//PLIK = INTEGER?!
+
+
+
+            $fakturyEntity->setCzyZaplacono($czyZaplacono);
+            $fakturyEntity->setTerminPlatnosci($terminPlatnosci);
+            $fakturyEntity->setProjekt($projekt);
+
+            $em->persist($fakturyEntity);
             $em->flush();
-
+            die('submitted');
             return $this->redirectToRoute('faktury_show', array('id' => $faktury->getId()));
         }
 

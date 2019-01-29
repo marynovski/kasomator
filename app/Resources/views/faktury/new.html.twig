@@ -1,9 +1,119 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <h2>W TEJ SEKCJI NIE UMIESZCZAMY FAKTUR PROFORMA! FAKTURA PROFORMA NIE JEST DOKUMENTEM KSIĘGOWYM! PROSZĘ UPLOADOWAĆ TYLKO FAKTURY!</h2>
     <h1>Nowa faktura</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    <div id="rodzaj">
+        {{ form_label(form.rodzaj) }}
+        {{ form_errors(form.rodzaj) }}
+        {{ form_widget(form.rodzaj) }}
+    </div>
+
+    <div id="firma">
+        {{ form_label(form.naszaFirmaId) }}
+        {{ form_errors(form.naszaFirmaId) }}
+        {{ form_widget(form.naszaFirmaId) }}
+    </div>
+
+    <div id="kontrahent_nip">
+        {{ form_label(form.kontrahentNip) }}
+        {{ form_errors(form.kontrahentNip) }}
+        {{ form_widget(form.kontrahentNip) }}
+    </div>
+
+    <div id="kontrahent_nazwa">
+        {{ form_label(form.kontrahentNazwa) }}
+        {{ form_errors(form.kontrahentNazwa) }}
+        {{ form_widget(form.kontrahentNazwa) }}
+    </div>
+
+    <div id="kontrahent_adres">
+        {{ form_label(form.kontrahentAdres) }}
+        {{ form_errors(form.kontrahentAdres) }}
+        {{ form_widget(form.kontrahentAdres) }}
+    </div>
+
+    <div id="kontrahent_miasto">
+        {{ form_label(form.kontrahentMiasto) }}
+        {{ form_errors(form.kontrahentMiasto) }}
+        {{ form_widget(form.kontrahentMiasto) }}
+    </div>
+
+    <div id="kontrahent_kod_pocztowy">
+        {{ form_label(form.kontrahentKodPocztowy) }}
+        {{ form_errors(form.kontrahentKodPocztowy) }}
+        {{ form_widget(form.kontrahentKodPocztowy) }}
+    </div>
+
+    <div id="numer">
+        {{ form_label(form.numer) }}
+        {{ form_errors(form.numer) }}
+        {{ form_widget(form.numer) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(form.dataWystawienia) }}
+        {{ form_errors(form.dataWystawienia) }}
+        {{ form_widget(form.dataWystawienia) }}
+    </div>
+
+    <div id="kontrahent_nr_konta">
+        {{ form_label(form.kontrahentNrKonta) }}
+        {{ form_errors(form.kontrahentNrKonta) }}
+        {{ form_widget(form.kontrahentNrKonta) }}
+    </div>
+
+    <div id="kwota_netto">
+        {{ form_label(form.kwotaNetto) }}
+        {{ form_errors(form.kwotaNetto) }}
+        {{ form_widget(form.kwotaNetto) }}
+    </div>
+
+    <div id="kwota_brutto">
+        {{ form_label(form.kwotaBrutto) }}
+        {{ form_errors(form.kwotaBrutto) }}
+        {{ form_widget(form.kwotaBrutto) }}
+    </div>
+
+    <div id="kwota_vat">
+        {{ form_label(form.kwotaVat) }}
+        {{ form_errors(form.kwotaVat) }}
+        {{ form_widget(form.kwotaVat) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(form.opis) }}
+        {{ form_errors(form.opis) }}
+        {{ form_widget(form.opis) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(form.formaPlatnosci) }}
+        {{ form_errors(form.formaPlatnosci) }}
+        {{ form_widget(form.formaPlatnosci) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(form.plikSkanFaktury) }}
+        {{ form_errors(form.plikSkanFaktury) }}
+        {{ form_widget(form.plikSkanFaktury) }}
+    </div>
+
+    <div id="box_checkbox">
+        {{ form_label(form.czyZaplacono) }}
+        {{ form_errors(form.czyZaplacono) }}
+        {{ form_widget(form.czyZaplacono) }}
+    </div>
+
+    <div id="paid">
+        {{ form_label(form.terminPlatnosci) }}
+        {{ form_errors(form.terminPlatnosci) }}
+        {{ form_widget(form.terminPlatnosci) }}
+    </div>
+
+    {#{{ form_widget(form) }}#}
     <input type="submit" value="Create"/>
     {{ form_end(form) }}
 
@@ -13,7 +123,87 @@
         </li>
     </ul>
     <script>
+        {#jQuery(document).ready(function ($) {#}
+            {#$(document).on('change', '#appbundle_faktury_czyZaplacono', function (e) {#}
+                {#e.preventDefault();#}
+                {#let value = $(this).val();#}
+
+                {#console.log("dsad", value);#}
+                {#// $(this).attr('disabled', true);#}
+                {#// $(this).addClass('button-disabled');#}
+
+                {#$.ajax({#}
+                    {#url: '{{ (path('faktury_stat_gov_nip')) }}',#}
+                    {#type: "POST",#}
+                    {#dataType: "json",#}
+                    {#data: {#}
+                        {#czyZaplacono: value#}
+                    {#},#}
+                    {#async: true,#}
+                {#}).done(function (data) {#}
+                    {#console.log(data);#}
+                    {#if (data.msg == 'OK' && data.response) {#}
+                        {#console.log(data.response);#}
+                        {#// alert('submit');#}
+                        {#// that.off('submit').submit();#}
+
+                        {#// $('#appbundle_faktury_czyZaplacono').val(data.response.praw_nazwa);#}
+
+                    {#} else {#}
+                        {#// alert(data.msg);#}
+                        {#// $('#call_return_info').html('');#}
+                    {#}#}
+                {#}).fail(function () {#}
+                    {#console.warn("FAIL FAIL");#}
+                    {#// $('#call_return_info').html('FAIL! FAIL');#}
+                {#});#}
+
+                {#return true;#}
+
+                {#// console.warn(keywords);#}
+                {#// that.off('submit').submit();#}
+
+            {#});#}
+
+        {#});#}
+
         jQuery(document).ready(function ($) {
+
+            $(document).on('change', '#rodzaj', function() {
+
+                var rodzajFaktury = $('select option:selected').val();
+
+                if (rodzajFaktury == 2) {
+                    $('#kwota_netto').hide();
+                    $('#kwota_vat').hide();
+                }else{
+                    $('#kwota_netto').show();
+                    $('#kwota_vat').show();
+                }
+
+
+
+
+                    // half_product_select_value = this.value;
+                    // half_product_select_name = $(this).find('option:selected').text();
+                    // $(what_box).find('input.half_product_add').attr("disabled", false);
+                    // console.log("DEBUG: SELECTED VALUE: " + half_product_select_value + " named: " + half_product_select_name);
+
+
+            });
+
+            $('#paid').hide();
+            $(document).on('click', '#appbundle_faktury_czyZaplacono', function (e) {
+                if($(this).is(":checked")){
+                    $('#paid').hide();
+                }
+
+                else if($(this).is(":not(:checked)")){
+                    $('#paid').show();
+                }
+            });
+
+
             $(document).on('blur', '#appbundle_faktury_kontrahentNip', function (e) {
                 e.preventDefault();
                 let value = $(this).val();

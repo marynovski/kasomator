@@ -4,18 +4,210 @@
     <h1>Edytuj fakturę</h1>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    <div id="rodzaj">
+        {{ form_label(edit_form.rodzaj) }}
+        {{ form_errors(edit_form.rodzaj) }}
+        {{ form_widget(edit_form.rodzaj) }}
+    </div>
+
+    <div id="firma">
+        {{ form_label(edit_form.naszaFirmaId) }}
+        {{ form_errors(edit_form.naszaFirmaId) }}
+        {{ form_widget(edit_form.naszaFirmaId) }}
+    </div>
+
+    <div id="kontrahent_nip">
+        {{ form_label(edit_form.kontrahentNip) }}
+        {{ form_errors(edit_form.kontrahentNip) }}
+        {{ form_widget(edit_form.kontrahentNip) }}
+    </div>
+
+    <div id="kontrahent_nazwa">
+        {{ form_label(edit_form.kontrahentNazwa) }}
+        {{ form_errors(edit_form.kontrahentNazwa) }}
+        {{ form_widget(edit_form.kontrahentNazwa) }}
+    </div>
+
+    <div id="kontrahent_adres">
+        {{ form_label(edit_form.kontrahentAdres) }}
+        {{ form_errors(edit_form.kontrahentAdres) }}
+        {{ form_widget(edit_form.kontrahentAdres) }}
+    </div>
+
+    <div id="kontrahent_miasto">
+        {{ form_label(edit_form.kontrahentMiasto) }}
+        {{ form_errors(edit_form.kontrahentMiasto) }}
+        {{ form_widget(edit_form.kontrahentMiasto) }}
+    </div>
+
+    <div id="kontrahent_kod_pocztowy">
+        {{ form_label(edit_form.kontrahentKodPocztowy) }}
+        {{ form_errors(edit_form.kontrahentKodPocztowy) }}
+        {{ form_widget(edit_form.kontrahentKodPocztowy) }}
+    </div>
+
+    <div id="numer">
+        {{ form_label(edit_form.numer) }}
+        {{ form_errors(edit_form.numer) }}
+        {{ form_widget(edit_form.numer) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(edit_form.dataWystawienia) }}
+        {{ form_errors(edit_form.dataWystawienia) }}
+        {{ form_widget(edit_form.dataWystawienia) }}
+    </div>
+
+    <div id="kontrahent_nr_konta">
+        {{ form_label(edit_form.kontrahentNrKonta) }}
+        {{ form_errors(edit_form.kontrahentNrKonta) }}
+        {{ form_widget(edit_form.kontrahentNrKonta) }}
+    </div>
+
+    <div id="kwota_netto">
+        {{ form_label(edit_form.kwotaNetto) }}
+        {{ form_errors(edit_form.kwotaNetto) }}
+        {{ form_widget(edit_form.kwotaNetto) }}
+    </div>
+
+    <div id="kwota_brutto">
+        {{ form_label(edit_form.kwotaBrutto) }}
+        {{ form_errors(edit_form.kwotaBrutto) }}
+        {{ form_widget(edit_form.kwotaBrutto) }}
+    </div>
+
+    <div id="kwota_vat">
+        {{ form_label(edit_form.kwotaVat) }}
+        {{ form_errors(edit_form.kwotaVat) }}
+        {{ form_widget(edit_form.kwotaVat) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(edit_form.opis) }}
+        {{ form_errors(edit_form.opis) }}
+        {{ form_widget(edit_form.opis) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(edit_form.formaPlatnosci) }}
+        {{ form_errors(edit_form.formaPlatnosci) }}
+        {{ form_widget(edit_form.formaPlatnosci) }}
+    </div>
+
+    <div id="data_wystawienia">
+        {{ form_label(edit_form.plikSkanFaktury) }}
+        {{ form_errors(edit_form.plikSkanFaktury) }}
+        {{ form_widget(edit_form.plikSkanFaktury) }}
+    </div>
+
+    <div id="box_checkbox">
+        {{ form_label(edit_form.czyZaplacono) }}
+        {{ form_errors(edit_form.czyZaplacono) }}
+        {{ form_widget(edit_form.czyZaplacono) }}
+    </div>
+
+    <div id="paid">
+        {{ form_label(edit_form.terminPlatnosci) }}
+        {{ form_errors(edit_form.terminPlatnosci) }}
+        {{ form_widget(edit_form.terminPlatnosci) }}
+    </div>
+        <input type="submit" value="Edytuj" />
     {{ form_end(edit_form) }}
 
     <ul>
         <li>
-            <a href="{{ path('faktury_index') }}">Back to the list</a>
+            <a href="{{ path('faktury_index') }}">Lista faktur</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Usuń">
             {{ form_end(delete_form) }}
         </li>
     </ul>
+
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $(document).on('change', '#rodzaj', function() {
+
+                var rodzajFaktury = $('select option:selected').val();
+
+                if (rodzajFaktury == 2) {
+                    $('#kwota_netto').hide();
+                    $('#kwota_vat').hide();
+                }else{
+                    $('#kwota_netto').show();
+                    $('#kwota_vat').show();
+                }
+
+
+
+
+                // half_product_select_value = this.value;
+                // half_product_select_name = $(this).find('option:selected').text();
+                // $(what_box).find('input.half_product_add').attr("disabled", false);
+                // console.log("DEBUG: SELECTED VALUE: " + half_product_select_value + " named: " + half_product_select_name);
+
+
+            });
+
+            $('#paid').hide();
+            $(document).on('click', '#appbundle_faktury_czyZaplacono', function (e) {
+                if($(this).is(":checked")){
+                    $('#paid').hide();
+                }
+
+                else if($(this).is(":not(:checked)")){
+                    $('#paid').show();
+                }
+            });
+
+
+            $(document).on('blur', '#appbundle_faktury_kontrahentNip', function (e) {
+                e.preventDefault();
+                let value = $(this).val();
+
+                // console.log("dsad", value);
+                // $(this).attr('disabled', true);
+                // $(this).addClass('button-disabled');
+
+                $.ajax({
+                    url: '{{ (path('faktury_stat_gov_nip')) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        nip: value
+                    },
+                    async: true,
+                }).done(function (data) {
+                    console.log(data);
+                    if (data.msg == 'OK' && data.response) {
+                        console.log(data.response);
+                        // alert('submit');
+                        // that.off('submit').submit();
+
+                        $('#appbundle_faktury_kontrahentNazwa').val(data.response.praw_nazwa);
+                        $('#appbundle_faktury_kontrahentAdres').val(data.response.praw_adSiedzUlica_Nazwa+' '+data.response.praw_adSiedzNumerNieruchomosci+' '+data.response.praw_adSiedzNumerLokalu);
+                        $('#appbundle_faktury_kontrahentMiasto').val(data.response.praw_adSiedzMiejscowosc_Nazwa);
+                        $('#appbundle_faktury_kontrahentKodPocztowy').val(data.response.praw_adSiedzKodPocztowy);
+
+                    } else {
+                        // alert(data.msg);
+                        // $('#call_return_info').html('');
+                    }
+                }).fail(function () {
+                    console.warn("FAIL FAIL");
+                    // $('#call_return_info').html('FAIL! FAIL');
+                });
+
+                return true;
+
+                // console.warn(keywords);
+                // that.off('submit').submit();
+
+            });
+
+        });
+    </script>
+    </script>
 {% endblock %}

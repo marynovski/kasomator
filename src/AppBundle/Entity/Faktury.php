@@ -127,9 +127,9 @@ class Faktury
     private $formaPlatnosci;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="plik_skan_faktury", type="integer")
+     * @ORM\Column(name="plik_skan_faktury", type="string", length=255, nullable=true)
      */
     private $plikSkanFaktury;
 
@@ -150,8 +150,7 @@ class Faktury
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Projekty")
-     * @ORM\JoinColumn(name="projekt", referencedColumnName="id")
+     * @ORM\Column(name="projekt", type="integer")
      */
     private $projekt;
 
@@ -554,11 +553,11 @@ class Faktury
     /**
      * Set projekt
      *
-     * @param Projekty $projekt
+     * @param integer $projekt
      *
      * @return Faktury
      */
-    public function setProjekt(Projekty $projekt)
+    public function setProjekt($projekt)
     {
         $this->projekt = $projekt;
 

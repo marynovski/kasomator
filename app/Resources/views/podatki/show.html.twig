@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Podatki</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ podatki.id }}</td>
+            </tr>
+            <tr>
+                <th>Urzad</th>
+                <td>{{ podatki.urzad }}</td>
+            </tr>
+            <tr>
+                <th>Naszafirmaid</th>
+                <td>{{ podatki.naszaFirmaId }}</td>
+            </tr>
+            <tr>
+                <th>Opis</th>
+                <td>{{ podatki.opis }}</td>
+            </tr>
+            <tr>
+                <th>Okres</th>
+                <td>{{ podatki.okres }}</td>
+            </tr>
+            <tr>
+                <th>Kwota</th>
+                <td>{{ podatki.kwota }}</td>
+            </tr>
+            <tr>
+                <th>Czyzaplacono</th>
+                <td>{% if podatki.czyZaplacono %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Terminplatnosci</th>
+                <td>{% if podatki.terminPlatnosci %}{{ podatki.terminPlatnosci|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('podatki_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('podatki_edit', { 'id': podatki.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

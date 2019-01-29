@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Podatkis list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Urzad</th>
+                <th>Naszafirmaid</th>
+                <th>Opis</th>
+                <th>Okres</th>
+                <th>Kwota</th>
+                <th>Czyzaplacono</th>
+                <th>Terminplatnosci</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for podatki in podatkis %}
+            <tr>
+                <td><a href="{{ path('podatki_show', { 'id': podatki.id }) }}">{{ podatki.id }}</a></td>
+                <td>{{ podatki.urzad }}</td>
+                <td>{{ podatki.naszaFirmaId }}</td>
+                <td>{{ podatki.opis }}</td>
+                <td>{{ podatki.okres }}</td>
+                <td>{{ podatki.kwota }}</td>
+                <td>{% if podatki.czyZaplacono %}Yes{% else %}No{% endif %}</td>
+                <td>{% if podatki.terminPlatnosci %}{{ podatki.terminPlatnosci|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('podatki_show', { 'id': podatki.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('podatki_edit', { 'id': podatki.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('podatki_new') }}">Create a new podatki</a>
+        </li>
+    </ul>
+{% endblock %}
