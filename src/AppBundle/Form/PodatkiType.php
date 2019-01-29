@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\NaszeFirmy;
+use AppBundle\Helper\UrzedyTypes;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,9 +24,9 @@ class PodatkiType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices'  => [
-                        'Urząd Skarbowy'        => 1,
-                        'ZUS'                   => 2,
-                        'Inne'                  => 3,
+                        'Urząd Skarbowy'        => UrzedyTypes::URZAD_SKARBOWY,
+                        'ZUS'                   => UrzedyTypes::ZUS,
+                        'Inne'                  => UrzedyTypes::INNE,
                     ]
                 ]
             )
