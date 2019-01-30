@@ -59,14 +59,14 @@ class Podatki
     /**
      * @var bool
      *
-     * @ORM\Column(name="czy_zaplacono", type="boolean")
+     * @ORM\Column(name="czy_zaplacono", type="boolean", nullable=true)
      */
     private $czyZaplacono;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="termin_platnosci", type="datetime")
+     * @ORM\Column(name="termin_platnosci", type="datetime", nullable=true)
      */
     private $terminPlatnosci;
 

@@ -130,8 +130,8 @@ class FakturyType extends AbstractType
             ->add('czyZaplacono',
                 CheckboxType::class,
                 [
-                    'label' => 'Czy faktura jest zapłacona?'
-
+                    'label' => 'Czy faktura jest zapłacona?',
+                    'required' => false,
                 ]
             )
             ->add('terminPlatnosci')
@@ -146,7 +146,7 @@ class FakturyType extends AbstractType
                     },
                     'choice_label' => 'nazwa',
                     'placeholder' => 'Wybierz',
-                    'required' => false,
+                    'required' => true,
                     'multiple' => false,
                     'label' => 'Projekt',
                 ]

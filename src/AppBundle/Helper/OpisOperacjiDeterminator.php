@@ -6,16 +6,24 @@ namespace AppBundle\Helper;
 class OpisOperacjiDeterminator
 {
 
-//    const BLIK_ZAKUP_ID = 1;
-//    const PRZELEW_ZEWNETRZNY_WYCHODZACY_ID = 1;
-//    const PRZELEW_WLASNY_ID = 1;
-//    const PRZELEW_ZEWNETRZNY_PRZYCHODZACY_ID = 1;
-//    const PRZELEW_MTRANSFER_WYCHODZACY_ID = 1;
-//    const BLIK_WYPLATA_ATM_KRAJOWY_ID = 1;
-//    const PRZELEW_EKSPRESOWY_ID = 1;
-//    const PRZELEW_EKSPRESOWY_ID = 1;
-//    const PRZELEW_EKSPRESOWY_ID = 1;
-//    const PRZELEW_EKSPRESOWY_ID = 1;
+
+    const PRZELEW_ZEWNETRZNY_WYCHODZACY_ID = 1;
+    const PRZELEW_ZEWNETRZNY_PRZYCHODZACY_ID = 2;
+    const PRZELEW_WEWNETRZNY_WYCHODZACY_ID = 3;
+    const PRZELEW_WLASNY_ID = 4;
+    const BLIK_ZAKUP_ID = 5;
+    const PRZELEW_MTRANSFER_WYCHODZACY_ID = 6;
+    const BLIK_WYPLATA_ATM_KRAJOWY_ID = 7;
+    const PRZELEW_EKSPRESOWY_ID = 8;
+    const OPLATA_PRZELEW_EKSPRESOWY_ID = 9;
+    const ZAKUP_PRZY_UZYCIU_KARTY_ID = 10;
+    const WYPLATA_W_BANKOMACIE_= 11;
+    const PROWIZJA_WYPLATA_BANKOMAT_KRAJOWY_ID = 12;
+    const BLIK_ZAKUP_E_COMMERCE_ID = 13;
+    const PRZELEW_SORBNET_WYCHODZACY_ID = 14;
+    const OPLATA_PRZELEW_SORBNET_WYCHODZACY_ID = 15;
+
+
 
     public function getIntegerValue($string)
     {
@@ -57,33 +65,33 @@ class OpisOperacjiDeterminator
                 'regex' => '/OP.ATA-PRZELEW EKSPRESOWY/',
                 'id'    => 9,
             ],
+//            [
+//                'regex' => '/PRZELEW W.ASNY/',
+//                'id'    => 10,
+//            ],
             [
-                'regex' => '/PRZELEW W.ASNY/',
+                'regex' => '/ZAKUP PRZY U.YCIU KARTY/',
                 'id'    => 10,
             ],
             [
-                'regex' => '/ZAKUP PRZY U.YCIU KARTY/',
+                'regex' => '/WYP.ATA W BANKOMACIE/',
                 'id'    => 11,
             ],
             [
-                'regex' => '/WYP.ATA W BANKOMACIE/',
+                'regex' => '/PROWIZJA-WYP.ATA BANKOMAT KRAJOWY/',
                 'id'    => 12,
             ],
             [
-                'regex' => '/PROWIZJA-WYP.ATA BANKOMAT KRAJOWY/',
+                'regex' => '/BLIK ZAKUP E-COMMERCE/',
                 'id'    => 13,
             ],
             [
-                'regex' => '/BLIK ZAKUP E-COMMERCE/',
+                'regex' => '/PRZELEW SORBNET WYCHODZ.CY/',
                 'id'    => 14,
             ],
             [
-                'regex' => '/PRZELEW SORBNET WYCHODZ.CY/',
-                'id'    => 15,
-            ],
-            [
                 'regex' => '/OP.ATA PRZELEW SORBNET WYCHODZ.CY/',
-                'id'    => 16,
+                'id'    => 15,
             ],
         ];
 

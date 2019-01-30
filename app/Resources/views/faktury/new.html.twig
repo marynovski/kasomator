@@ -113,6 +113,12 @@
         {{ form_widget(form.terminPlatnosci) }}
     </div>
 
+    <div id="projekty">
+        {{ form_label(form.projekt) }}
+        {{ form_errors(form.projekt) }}
+        {{ form_widget(form.projekt) }}
+    </div>
+
     {#{{ form_widget(form) }}#}
     <input type="submit" value="Create"/>
     {{ form_end(form) }}
@@ -176,6 +182,8 @@
                 if (rodzajFaktury == 2) {
                     $('#kwota_netto').hide();
                     $('#kwota_vat').hide();
+                    $('#appbundle_faktury_kwotaNetto').prop('required',false);
+                    $('#appbundle_faktury_kwotaVat').prop('required',false);
                 }else{
                     $('#kwota_netto').show();
                     $('#kwota_vat').show();
@@ -192,14 +200,29 @@
 
             });
 
-            $('#paid').hide();
+            $('#appbundle_faktury_terminPlatnosci_date_year').prop('required',true);
+            $('#appbundle_faktury_terminPlatnosci_date_month').prop('required',true);
+            $('#appbundle_faktury_terminPlatnosci_date_day').prop('required',true);
+            $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required',true);
+            $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required',true);
+
             $(document).on('click', '#appbundle_faktury_czyZaplacono', function (e) {
                 if($(this).is(":checked")){
                     $('#paid').hide();
+                    $('#appbundle_faktury_terminPlatnosci_date_year').prop('required',false);
+                    $('#appbundle_faktury_terminPlatnosci_date_month').prop('required',false);
+                    $('#appbundle_faktury_terminPlatnosci_date_day').prop('required',false);
+                    $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required',false);
+                    $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required',false);
                 }
 
                 else if($(this).is(":not(:checked)")){
                     $('#paid').show();
+                    $('#appbundle_faktury_terminPlatnosci_date_year').prop('required',true);
+                    $('#appbundle_faktury_terminPlatnosci_date_month').prop('required',true);
+                    $('#appbundle_faktury_terminPlatnosci_date_day').prop('required',true);
+                    $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required',true);
+                    $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required',true);
                 }
             });
 

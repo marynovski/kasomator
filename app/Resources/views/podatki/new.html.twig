@@ -55,14 +55,32 @@
         </li>
     </ul>
     <script>
-        $('#paid').hide();
+        $('#appbundle_podatki_terminPlatnosci_date_year').prop('required', true);
+        $('#appbundle_faktury_terminPlatnosci_date_month').prop('required', true);
+        $('#appbundle_faktury_terminPlatnosci_date_day').prop('required', true);
+        $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required', true);
+        $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required', true);
+
         $(document).on('click', '#appbundle_podatki_czyZaplacono', function (e) {
+
             if($(this).is(":checked")){
                 $('#paid').hide();
+                $('#appbundle_podatki_terminPlatnosci_date_year').prop('required', false);
+                $('#appbundle_faktury_terminPlatnosci_date_month').prop('required', false);
+                $('#appbundle_faktury_terminPlatnosci_date_day').prop('required', false);
+                $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required', false);
+                $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required', false);
+
             }
 
             else if($(this).is(":not(:checked)")){
                 $('#paid').show();
+                $('#appbundle_podatki_terminPlatnosci_date_year').prop('required', true);
+                $('#appbundle_faktury_terminPlatnosci_date_month').prop('required', true);
+                $('#appbundle_faktury_terminPlatnosci_date_day').prop('required', true);
+                $('#appbundle_faktury_terminPlatnosci_time_hour').prop('required', true);
+                $('#appbundle_faktury_terminPlatnosci_time_minute').prop('required', true);
+
             }
         });
     </script>

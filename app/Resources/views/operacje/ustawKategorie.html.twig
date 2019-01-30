@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Dane operacji</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ operacje.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ operacje.type }}</td>
+            </tr>
+            <tr>
+                <th>Dataoperacji</th>
+                <td>{% if operacje.dataOperacji %}{{ operacje.dataOperacji|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dataksiegowania</th>
+                <td>{% if operacje.dataKsiegowania %}{{ operacje.dataKsiegowania|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Opisoperacji</th>
+                <td>{{ operacje.opisOperacji }}</td>
+            </tr>
+            <tr>
+                <th>Tytul</th>
+                <td>{{ operacje.tytul }}</td>
+            </tr>
+            <tr>
+                <th>Kontrahent</th>
+                <td>{{ operacje.kontrahent }}</td>
+            </tr>
+            <tr>
+                <th>Nrkonta</th>
+                <td>{{ operacje.nrKonta }}</td>
+            </tr>
+            <tr>
+                <th>Kwota</th>
+                <td>{{ operacje.kwota }}</td>
+            </tr>
+            <tr>
+                <th>Saldopooperacji</th>
+                <td>{{ operacje.saldoPoOperacji }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form>
+        <select id="kategoria">
+            <option value="1">Faktura</option>
+            <option value="2">Wynagrodzenia</option>
+            <option value="3">Podatki</option>
+            <option value="4">Opłata Bankowa</option>
+        </select>
+    </form>
+
+    <div id="faktura">
+        FAKTURA
+    </div>
+
+    <div id="wynagrodzenia">
+        WYNAGRODZENIA
+    </div>
+
+    <div id="podatki">
+        PODATKI
+    </div>
+
+    <div id="oplata_bankowa">
+        OPLATA BANKOWA
+    </div>
+
+    <script>
+
+
+
+
+        $('#wynagrodzenia').hide();
+        $('#podatki').hide();
+        $('#oplata_bankowa').hide();
+        jQuery(document).ready(function ($) {
+
+            $(document).on('change', '#kategoria', function() {
+
+                var kategoria = $('select option:selected').val();
+
+                console.log("value", kategoria);
+
+
+
+                if (kategoria == 1) {
+                    $('#faktura').show();
+                    $('#wynagrodzenia').hide();
+                    $('#podatki').hide();
+                    $('#oplata_bankowa').hide();
+                } else if (kategoria == 2) {
+                    $('#faktura').hide();
+                    $('#wynagrodzenia').show();
+                    $('#podatki').hide();
+                    $('#oplata_bankowa').hide();
+                } else if (kategoria == 3) {
+                        $('#faktura').hide();
+                        $('#wynagrodzenia').hide();
+                        $('#podatki').show();
+                        $('#oplata_bankowa').hide()
+                } else if (kategoria == 4) {
+                        $('#faktura').hide();
+                        $('#wynagrodzenia').hide();
+                        $('#podatki').hide();
+                        $('#oplata_bankowa').show();
+                }
+
+            }
+
+            )});
+    </script>
+{% endblock %}

@@ -44,6 +44,14 @@ class PodatkiController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+//            print_r($request->request->all());die();
+
+            $firmaId = $request->request->get('appbundle_podatki')['naszaFirmaId'];
+
+            $podatki->setNaszaFirmaId($firmaId);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($podatki);
             $em->flush();

@@ -90,6 +90,13 @@ class Operacje
     private $plikWyciaguBankowego;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="kategoria", type="integer")
+     */
+    private $kategoria;
+
+    /**
      * Get id
      *
      * @return int
@@ -314,6 +321,24 @@ class Operacje
     {
         $this->plikWyciaguBankowego = $plikWyciaguBankowego;
     }
+
+    /**
+     * @return int
+     */
+    public function getKategoria()
+    {
+        return $this->kategoria;
+    }
+
+    /**
+     * @param int $kategoria
+     */
+    public function setKategoria($kategoria)
+    {
+        $this->kategoria = $kategoria;
+    }
+
+
 
 
 }

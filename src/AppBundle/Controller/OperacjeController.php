@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Operacje;
+use AppBundle\Helper\KategorieTypes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -10,10 +11,45 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Operacje controller.
  *
- * @Route("wyplatygotowkowe")
+ * @Route("operacje")
  */
 class OperacjeController extends Controller
 {
+    /**
+     * Lists all operacje entities.
+     *
+     * @Route("/nieprzypisane", name="wyplatygotowkowe_nieprzypisane")
+     * @Method("GET")
+     */
+    public function nieprzypisaneOperacjeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $operacjes = $em->getRepository('AppBundle:Operacje')->findBy(['kategoria' => KategorieTypes::NIEPRZYPISANA]);
+
+        return $this->render('operacje/nieprzypisane.html.twig', array(
+            'operacjes' => $operacjes,
+        ));
+    }
+
+    /**
+     * Lists all operacje entities.
+     *
+     * @Route("/nieprzypisane/{id}", name="wyplatygotowkowe_ustaw_kategorie")
+     * @Method("GET")
+     */
+    public function ustawKategorieAction(Operacje $operacje)
+    {
+        $deleteForm = $this->createDeleteForm($operacje);
+
+        return $this->render('operacje/ustawKategorie.html.twig', array(
+            'operacje' => $operacje,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+
+
     /**
      * Lists all operacje entities.
      *
