@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class PlatnosciController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="platnosci")
      */
     public function indexAction()
     {
