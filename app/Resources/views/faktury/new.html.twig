@@ -119,59 +119,10 @@
         {{ form_widget(form.projekt) }}
     </div>
 
-    {#{{ form_widget(form) }}#}
-    <input type="submit" value="Create"/>
+    <input type="submit" value="Dodaj"/>
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('faktury_index') }}">Lista faktur</a>
-        </li>
-    </ul>
     <script>
-        {#jQuery(document).ready(function ($) {#}
-            {#$(document).on('change', '#appbundle_faktury_czyZaplacono', function (e) {#}
-                {#e.preventDefault();#}
-                {#let value = $(this).val();#}
-
-                {#console.log("dsad", value);#}
-                {#// $(this).attr('disabled', true);#}
-                {#// $(this).addClass('button-disabled');#}
-
-                {#$.ajax({#}
-                    {#url: '{{ (path('faktury_stat_gov_nip')) }}',#}
-                    {#type: "POST",#}
-                    {#dataType: "json",#}
-                    {#data: {#}
-                        {#czyZaplacono: value#}
-                    {#},#}
-                    {#async: true,#}
-                {#}).done(function (data) {#}
-                    {#console.log(data);#}
-                    {#if (data.msg == 'OK' && data.response) {#}
-                        {#console.log(data.response);#}
-                        {#// alert('submit');#}
-                        {#// that.off('submit').submit();#}
-
-                        {#// $('#appbundle_faktury_czyZaplacono').val(data.response.praw_nazwa);#}
-
-                    {#} else {#}
-                        {#// alert(data.msg);#}
-                        {#// $('#call_return_info').html('');#}
-                    {#}#}
-                {#}).fail(function () {#}
-                    {#console.warn("FAIL FAIL");#}
-                    {#// $('#call_return_info').html('FAIL! FAIL');#}
-                {#});#}
-
-                {#return true;#}
-
-                {#// console.warn(keywords);#}
-                {#// that.off('submit').submit();#}
-
-            {#});#}
-
-        {#});#}
 
         jQuery(document).ready(function ($) {
 
@@ -231,9 +182,7 @@
                 e.preventDefault();
                 let value = $(this).val();
 
-                // console.log("dsad", value);
-                // $(this).attr('disabled', true);
-                // $(this).addClass('button-disabled');
+
 
                 $.ajax({
                     url: '{{ (path('faktury_stat_gov_nip')) }}',

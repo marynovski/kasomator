@@ -1,28 +1,101 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Płatności</h1>
+    <h1>Niepołacone faktury i podatki</h1>
 
-    {#<table>#}
-        {#<thead>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<th>Type</th>#}
-                {#<th>Dataoperacji</th>#}
-                {#<th>Dataksiegowania</th>#}
-                {#<th>Opisoperacji</th>#}
-                {#<th>Tytul</th>#}
-                {#<th>Kontrahent</th>#}
-                {#<th>Nrkonta</th>#}
-                {#<th>Kwota</th>#}
-                {#<th>Saldopooperacji</th>#}
-                {#<th>Actions</th>#}
-            {#</tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {% for platnosc in platnosci %}
+    <table>
+        <thead>
             <tr>
-                <td>{ 'id': faktury.id }) }}">{{ platnosc.id }}</td>
+
+                <th>Nazwa Kontrahenta/Urzędu</th>
+                <th>Opis/Nr Faktury</th>
+                <th>Kwota</th>
+                <th>Nr Konta</th>
+                <th>Projekt</th>
+                <th>Termin Płatności</th>
+                <th>Opłacone?</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for platnosc in platnosci %}
+
+            <tr {% if "now"|date('Y-m-d') > platnosc.terminPlatnosci|date('Y-m-d') %}class="po_terminie"{%  endif %}>
+
+
+
+                <td>
+                    {% if platnosc.urzad is defined %}
+
+                        {% if platnosc.urzad == 1 %}
+                            <span>Urząd Skarbowy</span>
+                        {% elseif platnosc.urzad == 2 %}
+                            <span>ZUS</span>
+                        {% elseif platnosc.urzad == 3 %}
+                            <span>Inne</span>
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if platnosc.kontrahent.nazwa is defined %}
+                        {{ platnosc.kontrahent.nazwa }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {% if platnosc.opis is defined %}
+                        {{ platnosc.opis }}
+                    {% endif %}
+
+                    {% if platnosc.numer is defined %}
+                        / {{ platnosc.numer }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {% if platnosc.kwota is defined %}
+                        {{ platnosc.kwota }}
+                    {% endif %}
+
+                    {% if platnosc.kwotaBrutto is defined %}
+                        {{ platnosc.kwotaBrutto }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if platnosc.kontrahentNrKonta is defined %}
+                        {{ platnosc.kontrahentNrKonta }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if platnosc.projekt is defined %}
+                        {{ platnosc.projekt }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if platnosc.terminPlatnosci is defined %}
+                        {{ platnosc.terminPlatnosci|date('Y-m-d H:i:s') }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <button type="button">Tak</button>
+
+                </td>
+
+
+
             </tr>
         {% endfor %}
                 {#<td>{{ operacje.type }}</td>#}

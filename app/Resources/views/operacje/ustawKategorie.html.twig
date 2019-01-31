@@ -59,10 +59,18 @@
 
     <div id="faktura">
         FAKTURA
+        {{ form_start(faktura_form) }}
+        {{ form_widget(faktura_form) }}
+        <input type="submit" value="Dodaj" />
+        {{ form_end(faktura_form) }}
     </div>
 
     <div id="wynagrodzenia">
         WYNAGRODZENIA
+        {{ form_start(wynagrodzenie_form) }}
+        {{ form_widget(wynagrodzenie_form) }}
+        <input type="submit" value="Dodaj" />
+        {{ form_end(wynagrodzenie_form) }}
     </div>
 
     <div id="podatki">
@@ -71,6 +79,10 @@
 
     <div id="oplata_bankowa">
         OPLATA BANKOWA
+        {{ form_start(oplata_bankowa_form) }}
+        {{ form_widget(oplata_bankowa_form) }}
+        <input type="submit" value="Dodaj" />
+        {{ form_end(oplata_bankowa_form) }}
     </div>
 
     <script>

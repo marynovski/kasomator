@@ -36,7 +36,7 @@ class WyciagiBankoweController extends Controller
     /**
      * Creates a new wyciagiBankowe entity.
      *
-     * @Route("/zaladuj_plik", name="wyciagibankowe_zaladuj_plik")
+     * @Route("/zaladuj_plik", name="operacje_zaladuj_plik")
      * @Method({"GET", "POST"})
      */
     public function zaladujPlikAction(Request $request)

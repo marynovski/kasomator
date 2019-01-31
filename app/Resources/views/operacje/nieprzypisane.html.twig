@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Operacje</h1>
+    <h1>Operacje bez kategorii</h1>
 
     <table>
         <thead>
@@ -22,7 +22,7 @@
         <tbody>
         {% for operacje in operacjes %}
             <tr>
-                <td><a href="{{ path('wyplatygotowkowe_ustaw_kategorie', { 'id': operacje.id }) }}">{{ operacje.id }}</a></td>
+                <td><a href="{{ path('operacje_ustaw_kategorie', { 'id': operacje.id }) }}">{{ operacje.id }}</a></td>
                 {#<td>{{ operacje.type }}</td>#}
                 <td>{% if operacje.dataOperacji %}{{ operacje.dataOperacji|date('Y-m-d H:i:s') }}{% endif %}</td>
                 {#<td>{% if operacje.dataKsiegowania %}{{ operacje.dataKsiegowania|date('Y-m-d H:i:s') }}{% endif %}</td>#}
@@ -35,10 +35,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('wyplatygotowkowe_ustaw_kategorie', { 'id': operacje.id }) }}">Przypisz Kategorie</a>
+                            <a href="{{ path('operacje_ustaw_kategorie', { 'id': operacje.id }) }}">Przypisz Kategorie</a>
                         </li>
                         <li>
-                            <a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">Edytuj</a>
+                            <a href="{{ path('operacje_edit', { 'id': operacje.id }) }}">Edytuj</a>
                         </li>
                     </ul>
                 </td>
@@ -49,7 +49,19 @@
 
     <ul>
         <li>
-            <a href="{{ path('wyplatygotowkowe_new') }}">Nowa operacja</a>
+            <a href="{{ path('operacje_zaladuj_plik') }}">Upload wyciągu bankowego</a>
+        </li>
+        <li>
+            <a href="{{ path('naszefirmy_new') }}">Nowa firma</a>
+        </li>
+        <li>
+            <a href="{{ path('projekty_new') }}">Nowy projekt</a>
+        </li>
+        <li>
+            <a href="{{ path('faktury_new') }}">Nowa faktura</a>
+        </li>
+        <li>
+            <a href="{{ path('podatki_new') }}">Nowy podatek</a>
         </li>
     </ul>
 {% endblock %}

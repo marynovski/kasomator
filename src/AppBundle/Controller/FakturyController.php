@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Faktury;
+use AppBundle\Entity\KontrahenciFaktur;
 use AppBundle\Entity\Projekty;
 use AppBundle\Helper\FakturyTypes;
+use AppBundle\Repository\FakturyRepository;
+use AppBundle\Repository\KontrahenciFakturRepository;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
@@ -96,30 +99,30 @@ class FakturyController extends Controller
     public function indexAction()
     {
 
-        $gus = new GusApi('a137213445434e769901');
-//for development server use:
-//$gus = new GusApi('abcde12345abcde12345', 'dev');
-
-        try {
-            $nipToCheck = '8943132676'; //change to valid nip value
-            $gus->login();
-
-            $gusReports = $gus->getByNip($nipToCheck);
-
-            foreach ($gusReports as $gusReport) {
-                //you can change report type to other one
-                $reportType = ReportTypes::REPORT_PUBLIC_LAW;
-//                echo $gusReport->getName();
-                $fullReport = $gus->getFullReport($gusReport, $reportType);
-//                var_dump($fullReport);
-            }
-        } catch (InvalidUserKeyException $e) {
-            echo 'Bad user key';
-        } catch (\GusApi\Exception\NotFoundException $e) {
-            echo 'No data found <br>';
-            echo 'For more information read server message below: <br>';
-            echo $gus->getResultSearchMessage();
-        }
+//        $gus = new GusApi('a137213445434e769901');
+////for development server use:
+////$gus = new GusApi('abcde12345abcde12345', 'dev');
+//
+//        try {
+//            $nipToCheck = '8943132676'; //change to valid nip value
+//            $gus->login();
+//
+//            $gusReports = $gus->getByNip($nipToCheck);
+//
+//            foreach ($gusReports as $gusReport) {
+//                //you can change report type to other one
+//                $reportType = ReportTypes::REPORT_PUBLIC_LAW;
+////                echo $gusReport->getName();
+//                $fullReport = $gus->getFullReport($gusReport, $reportType);
+////                var_dump($fullReport);
+//            }
+//        } catch (InvalidUserKeyException $e) {
+//            echo 'Bad user key';
+//        } catch (\GusApi\Exception\NotFoundException $e) {
+//            echo 'No data found <br>';
+//            echo 'For more information read server message below: <br>';
+//            echo $gus->getResultSearchMessage();
+//        }
 
 
 
@@ -170,15 +173,11 @@ class FakturyController extends Controller
 
             $naszaFirmaId           = $form['naszaFirmaId']->getData()->getId();
 
-            $kontrahentNip          = $form['kontrahentNip']->getData();
-            $kontrahentNazwa        = $form['kontrahentNazwa']->getData();
-            $kontrahentAdres        = $form['kontrahentAdres']->getData();
-            $kontrahentMiasto       = $form['kontrahentMiasto']->getData();
-            $kontrahentKodPocztowy  = $form['kontrahentKodPocztowy']->getData();
+
 
             $numer                  = $form['numer']->getData();
             $dataWystawienia        = $form['dataWystawienia']->getData();
-            $kontrahentNrKonta      = $form['kontrahentNrKonta']->getData();
+
 
             $kwotaNetto             = $form['kwotaNetto']->getData();
             $kwotaBrutto            = $form['kwotaBrutto']->getData();
@@ -196,14 +195,14 @@ class FakturyController extends Controller
 
             $fakturyEntity = $faktury;
             $fakturyEntity->setNaszaFirmaId($naszaFirmaId);
-            $fakturyEntity->setKontrahentNip($kontrahentNip);
-            $fakturyEntity->setKontrahentNazwa($kontrahentNazwa);
-            $fakturyEntity->setKontrahentAdres($kontrahentAdres);
-            $fakturyEntity->setKontrahentMiasto($kontrahentMiasto);
-            $fakturyEntity->setKontrahentKodPocztowy($kontrahentKodPocztowy);
+//            $fakturyEntity->setKontrahentNip($kontrahentNip);
+//            $fakturyEntity->setKontrahentNazwa($kontrahentNazwa);
+//            $fakturyEntity->setKontrahentAdres($kontrahentAdres);
+//            $fakturyEntity->setKontrahentMiasto($kontrahentMiasto);
+//            $fakturyEntity->setKontrahentKodPocztowy($kontrahentKodPocztowy);
             $fakturyEntity->setNumer($numer);
             $fakturyEntity->setDataWystawienia($dataWystawienia);
-            $fakturyEntity->setKontrahentNrKonta($kontrahentNrKonta);
+//            $fakturyEntity->setKontrahentNrKonta($kontrahentNrKonta);
             $fakturyEntity->setRodzaj($rodzaj);
 
             if ($rodzaj == FakturyTypes::ZAGRANICZNA) {
@@ -225,7 +224,33 @@ class FakturyController extends Controller
             $fakturyEntity->setTerminPlatnosci($terminPlatnosci);
             $fakturyEntity->setProjekt($projekt);
 
+
+
+
+            $kontrahentNip = $form['kontrahentNip']->getData();
+
+            /** @var KontrahenciFakturRepository  $kfRepo */
+            $kfRepo = $em->getRepository(KontrahenciFaktur::class);
+            /** @var KontrahenciFaktur $kontrahent */
+            $kontrahent = $kfRepo->findOneBy(['nip' => $kontrahentNip]);
+
+            if (!($kontrahent instanceof KontrahenciFaktur)) {
+                $kontrahent = new KontrahenciFaktur();
+                $kontrahent->setNip($kontrahentNip);
+                $kontrahent->setNazwa($form['kontrahentNazwa']->getData());
+                $kontrahent->setAdres($form['kontrahentAdres']->getData());
+                $kontrahent->setMiasto($form['kontrahentMiasto']->getData());
+                $kontrahent->setKodPocztowy($form['kontrahentKodPocztowy']->getData());
+                $kontrahent->setNrKonta($form['kontrahentNrKonta']->getData());
+
+                $em->persist($kontrahent);
+            }
+
+            $fakturyEntity->setKontrahent($kontrahent);
+
             $em->persist($fakturyEntity);
+
+
             $em->flush();
             die('submitted');
             return $this->redirectToRoute('faktury_show', array('id' => $faktury->getId()));

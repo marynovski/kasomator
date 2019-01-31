@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Podatkis list</h1>
+    <h1>Lista podatków</h1>
 
     <table>
         <thead>
@@ -31,10 +31,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('podatki_show', { 'id': podatki.id }) }}">show</a>
+                            <a href="{{ path('podatki_show', { 'id': podatki.id }) }}">Pokaż</a>
                         </li>
                         <li>
-                            <a href="{{ path('podatki_edit', { 'id': podatki.id }) }}">edit</a>
+                            <a href="{{ path('podatki_edit', { 'id': podatki.id }) }}">Edycja</a>
                         </li>
                     </ul>
                 </td>
@@ -45,7 +45,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('podatki_new') }}">Create a new podatki</a>
+            <a href="{{ path('podatki_new') }}">Dodaj nowy podatek</a>
         </li>
     </ul>
 {% endblock %}

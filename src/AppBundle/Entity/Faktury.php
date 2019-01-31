@@ -38,37 +38,39 @@ class Faktury
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_nip", type="string", length=255)
      */
     private $kontrahentNip;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_nazwa", type="string", length=255)
      */
     private $kontrahentNazwa;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_adres", type="string", length=255)
      */
     private $kontrahentAdres;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_miasto", type="string", length=255)
      */
     private $kontrahentMiasto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_kod_pocztowy", type="string", length=255)
      */
     private $kontrahentKodPocztowy;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="KontrahenciFaktur")
+     * @ORM\JoinColumn(name="kontrahent_id", referencedColumnName="id")
+     */
+    private $kontrahent;
 
     /**
      * @var string
@@ -87,7 +89,6 @@ class Faktury
     /**
      * @var string
      *
-     * @ORM\Column(name="kontrahent_nr_konta", type="string", length=255)
      */
     private $kontrahentNrKonta;
 
@@ -292,7 +293,21 @@ class Faktury
         $this->kontrahentKodPocztowy = $kontrahentKodPocztowy;
     }
 
+    /**
+     * @return KontrahenciFaktur
+     */
+    public function getKontrahent()
+    {
+        return $this->kontrahent;
+    }
 
+    /**
+     * @param KontrahenciFaktur $kontrahent
+     */
+    public function setKontrahent(KontrahenciFaktur $kontrahent)
+    {
+        $this->kontrahent = $kontrahent;
+    }
 
     /**
      * Set numer

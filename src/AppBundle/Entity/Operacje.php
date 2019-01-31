@@ -29,6 +29,13 @@ class Operacje
     private $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nr_konta_glownego", type="string", length=255)
+     */
+    private $nrKontaGlownego;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="data_operacji", type="datetime")
@@ -62,6 +69,7 @@ class Operacje
      * @ORM\Column(name="kontrahent", type="string", length=10000)
      */
     private $kontrahent;
+
     /**
      * @var string
      *
@@ -97,6 +105,14 @@ class Operacje
     private $kategoria;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="opis_akcji", type="string", length=255, nullable=true)
+     */
+    private $opisAkcji;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -121,6 +137,24 @@ class Operacje
     {
         $this->type = $type;
     }
+
+    /**
+     * @return string
+     */
+    public function getNrKontaGlownego()
+    {
+        return $this->nrKontaGlownego;
+    }
+
+    /**
+     * @param string $nrKontaGlownego
+     */
+    public function setNrKontaGlownego($nrKontaGlownego)
+    {
+        $this->nrKontaGlownego = $nrKontaGlownego;
+    }
+
+
 
     /**
      * Set dataOperacji
@@ -336,6 +370,22 @@ class Operacje
     public function setKategoria($kategoria)
     {
         $this->kategoria = $kategoria;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOpisAkcji()
+    {
+        return $this->opisAkcji;
+    }
+
+    /**
+     * @param string $opisAkcji
+     */
+    public function setOpisAkcji($opisAkcji)
+    {
+        $this->opisAkcji = $opisAkcji;
     }
 
 

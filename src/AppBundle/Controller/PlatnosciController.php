@@ -15,14 +15,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class PlatnosciController extends Controller
 {
     /**
-     * @Route("/index")
+     * @Route("/")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $queryBuilderFaktury = $em->getRepository(Faktury::class)->createQueryBuilder('f');
-        $result_faktury = $queryBuilderFaktury->select('f')
+        $result_faktury = $queryBuilderFaktury->select('f, k')
+            ->leftJoin('f.kontrahent', 'k')
             ->where($queryBuilderFaktury->expr()->isNotNull('f.terminPlatnosci'))
             ->andWhere('f.czyZaplacono = 0')
             ->orderBy('f.terminPlatnosci', 'ASC')
@@ -53,13 +54,14 @@ class PlatnosciController extends Controller
 //        array_multisort( array_column($platnosci, "id"), SORT_ASC, $platnosci );
 
 
-        print_r($platnosci);
-        die();
+//        print_r($platnosci);
+//        die();
 
-
+        $teraz = date_create()->format('Y-m-d H:i:s');
 
         return $this->render('platnosci/index.html.twig', array(
             'platnosci' => $platnosci,
+            'teraz' => $teraz,
         ));
     }
 
