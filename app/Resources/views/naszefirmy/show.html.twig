@@ -34,15 +34,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('naszefirmy_index') }}">Lista firm</a>
-        </li>
-        <li>
-            <a href="{{ path('naszefirmy_edit', { 'id': naszeFirmy.id }) }}">Edytuj</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Usuń">
-            {{ form_end(delete_form) }}
+            <a href="{{ path('operacje_nieprzypisane') }}">Operacje</a>
         </li>
     </ul>
 {% endblock %}

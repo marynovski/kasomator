@@ -87,12 +87,6 @@ class Faktury
     private $dataWystawienia;
 
     /**
-     * @var string
-     *
-     */
-    private $kontrahentNrKonta;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="kwota_netto", type="float")
@@ -355,30 +349,6 @@ class Faktury
     public function getDataWystawienia()
     {
         return $this->dataWystawienia;
-    }
-
-    /**
-     * Set kontrahentNrKonta
-     *
-     * @param string $kontrahentNrKonta
-     *
-     * @return Faktury
-     */
-    public function setKontrahentNrKonta($kontrahentNrKonta)
-    {
-        $this->kontrahentNrKonta = $kontrahentNrKonta;
-
-        return $this;
-    }
-
-    /**
-     * Get kontrahentNrKonta
-     *
-     * @return string
-     */
-    public function getKontrahentNrKonta()
-    {
-        return $this->kontrahentNrKonta;
     }
 
     /**

@@ -19,7 +19,7 @@
         <tbody>
         {% for platnosc in platnosci %}
 
-            <tr {% if "now"|date('Y-m-d') > platnosc.terminPlatnosci|date('Y-m-d') %}class="po_terminie"{%  endif %}>
+            <tr id="{{ loop.index }}"{% if "now"|date('Y-m-d') > platnosc.terminPlatnosci|date('Y-m-d') %}class="po_terminie"{%  endif %}>
 
 
 
@@ -90,7 +90,7 @@
 
                 <td>
 
-                    <button type="button">Tak</button>
+                    <button id="status_zaplacone" type="button" onClick="zaplacone({{ platnosc.id }}{% if platnosc.numer is defined %},{{ platnosc.numer }}{% else %},0{% endif %}, {{ loop.index }})">Tak</button>
 
                 </td>
 
@@ -98,33 +98,55 @@
 
             </tr>
         {% endfor %}
-                {#<td>{{ operacje.type }}</td>#}
-                {#<td>{% if operacje.dataOperacji %}{{ operacje.dataOperacji|date('Y-m-d H:i:s') }}{% endif %}</td>#}
-                {#<td>{% if operacje.dataKsiegowania %}{{ operacje.dataKsiegowania|date('Y-m-d H:i:s') }}{% endif %}</td>#}
-                {#<td>{{ operacje.opisOperacji }}</td>#}
-                {#<td>{{ operacje.tytul }}</td>#}
-                {#<td>{{ operacje.kontrahent }}</td>#}
-                {#<td>{{ operacje.nrKonta }}</td>#}
-                {#<td>{{ operacje.kwota }}</td>#}
-                {#<td>{{ operacje.saldoPoOperacji }}</td>#}
-                {#<td>#}
-                    {#<ul>#}
-                        {#<li>#}
-                            {#<a href="{{ path('wyplatygotowkowe_ustaw_kategorie', { 'id': operacje.id }) }}">Przypisz Kategorie</a>#}
-                        {#</li>#}
-                        {#<li>#}
-                            {#<a href="{{ path('wyplatygotowkowe_edit', { 'id': operacje.id }) }}">Edytuj</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</td>#}
-            {#</tr>#}
 
-        {#</tbody>#}
-    {#</table>#}
+        <ul>
+            <li>
+                <a href="{{ path('operacje_nieprzypisane') }}">Operacje</a>
+            </li>
+        </ul>
 
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('wyplatygotowkowe_new') }}">Nowa operacja</a>#}
-        {#</li>#}
-    {#</ul>#}
+        <script>
+
+
+
+            function zaplacone(id, nr, nr_wiersza){
+
+                let idPlatnosci = id;
+                let nrFaktury = nr;
+                let numer_wiersza = nr_wiersza;
+
+                $.ajax({
+                    url: '{{ (path('platnosci_status_zaplacone')) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: idPlatnosci,
+                        nr: nrFaktury
+                    },
+                    async: true,
+                }).done(function (data) {
+                    document.getElementById(numer_wiersza).style.display = "none";
+                    console.log(data);
+                    if (data.msg == 'OK' && data.response) {
+                        console.log(data.respons, numer_wiersza);
+
+                    } else {
+                        // alert(data.msg);
+                        // $('#call_return_info').html('');
+                    }
+                }).fail(function () {
+                    console.warn("FAIL FAIL");
+                });
+
+                return true;
+
+                // console.warn(keywords);
+                // that.off('submit').submit();
+
+            };
+
+
+
+
+        </script>
 {% endblock %}

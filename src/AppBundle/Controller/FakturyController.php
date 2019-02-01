@@ -195,14 +195,8 @@ class FakturyController extends Controller
 
             $fakturyEntity = $faktury;
             $fakturyEntity->setNaszaFirmaId($naszaFirmaId);
-//            $fakturyEntity->setKontrahentNip($kontrahentNip);
-//            $fakturyEntity->setKontrahentNazwa($kontrahentNazwa);
-//            $fakturyEntity->setKontrahentAdres($kontrahentAdres);
-//            $fakturyEntity->setKontrahentMiasto($kontrahentMiasto);
-//            $fakturyEntity->setKontrahentKodPocztowy($kontrahentKodPocztowy);
             $fakturyEntity->setNumer($numer);
             $fakturyEntity->setDataWystawienia($dataWystawienia);
-//            $fakturyEntity->setKontrahentNrKonta($kontrahentNrKonta);
             $fakturyEntity->setRodzaj($rodzaj);
 
             if ($rodzaj == FakturyTypes::ZAGRANICZNA) {

@@ -7,6 +7,9 @@ use AppBundle\Entity\Podatki;
 use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Platnosci controller.
  *
@@ -14,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class PlatnosciController extends Controller
 {
+
     /**
      * @Route("/", name="platnosci")
      */
@@ -63,6 +67,43 @@ class PlatnosciController extends Controller
             'platnosci' => $platnosci,
             'teraz' => $teraz,
         ));
+    }
+
+    /**
+     * @Route("/platnosci_status_zaplacone", name="platnosci_status_zaplacone", options={"expose": true})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function platnosciStatusZaplaconeAjaxAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException('Not XHR.');
+        }
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $request->request->get('id');
+        if ($nr = $request->request->get('nr')) {
+
+            $return_msg['response'] = "To jest faktura".$nr;
+
+            $faktura = $em->getRepository(Faktury::class)->find($id);
+            $faktura->setczyZaplacono(true);
+            $em->persist($faktura);
+            $em->flush();
+
+
+        } else {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $podatek = $em->getRepository(Podatki::class)->find($id);
+            $podatek->setczyZaplacono(true);
+            $em->flush();
+
+            $return_msg['response'] = "To nie jest faktura!.".$id;
+        }
+
+        return new JsonResponse($return_msg);
     }
 
 }

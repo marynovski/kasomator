@@ -44,6 +44,7 @@ class PodatkiType extends AbstractType
                     'required' => false,
                     'multiple' => false,
                     'label' => 'Nasza firma',
+                    'required' => true,
                 ]
             )
             ->add('opis')

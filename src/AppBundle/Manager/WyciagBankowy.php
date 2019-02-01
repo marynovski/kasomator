@@ -50,7 +50,7 @@ class WyciagBankowy
 
         /** @var OperacjeRepository $oRepo */
         $oRepo = $this->em->getRepository(Operacje::class);
-        $operacjeEntity = new Operacje();
+
 
         foreach ($dane_wyciagu_bankowego as $linia) {
 
@@ -66,15 +66,13 @@ class WyciagBankowy
                 $daneZLinii[0] = mb_convert_encoding($daneZLinii[0], 'UTF-8');
                 $daneZLinii[0] = str_replace([' ', '?'], ['', ''], $daneZLinii[0]);
 
-                $operacjeEntity->setNrKontaGlownego($daneZLinii[0]);
-
+                $nrKontaGlownego = $daneZLinii[0];
             }
 
             if (!empty($daneZLinii[0] == '#Numer rachunku')) {
                 $zaczytujGlowneKonto = true;
             } else {
                 $zaczytujGlowneKonto = false;
-
             }
 
             if (!empty($daneZLinii[0] == '#Data operacji') && (!empty($daneZLinii[6] == '#Kwota'))) {
@@ -84,7 +82,7 @@ class WyciagBankowy
                 continue;
             }
 
-            if ($counter == 1 && $zaczytuj == true/*$linia[0] == ''*/) {
+            if ($counter == 1 && $zaczytuj == true) {
                 $zakonczenie--;
                 continue;
             }
@@ -113,6 +111,8 @@ class WyciagBankowy
             $daneZLinii[6] = $this->stringToFloatNumberParser($daneZLinii[6]);
             $daneZLinii[7] = $this->stringToFloatNumberParser($daneZLinii[7]);
 
+            $daneZLinii[6] = abs($daneZLinii[6]);
+
 
             /** @var Operacje $wyciagi */
             $wyciagi = $oRepo->findOneBy([
@@ -131,15 +131,14 @@ class WyciagBankowy
                 continue;
             }
 
-            if (!empty($wyciagi) && !empty($wyciagi->getId())) {
+            if ((!empty($wyciagi)) && (!empty($wyciagi->getId()))) {
 
                 echo "Duplikat!<br>";
                 continue;
             }
 
             //Ujemne kwoty na dodatnie
-            $daneZLinii[6] = abs($daneZLinii[6]);
-
+            $operacjeEntity = new Operacje();
             $operacjeEntity->setDataOperacji($daneZLinii[0]);
             $operacjeEntity->setDataKsiegowania($daneZLinii[1]);
             $operacjeEntity->setOpisOperacji($daneZLinii[2]);
@@ -150,6 +149,7 @@ class WyciagBankowy
             $operacjeEntity->setSaldoPoOperacji($daneZLinii[7]);
             $operacjeEntity->setType(OperacjeType::WYCIAG_BANKOWY);
             $operacjeEntity->setKategoria(0);
+            $operacjeEntity->setNrKontaGlownego($nrKontaGlownego);
 
 
             $this->em->persist($operacjeEntity);

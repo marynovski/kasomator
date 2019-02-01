@@ -56,6 +56,7 @@ class FakturyType extends AbstractType
                     'required' => false,
                     'multiple' => false,
                     'label' => 'Obciążana firma',
+                    'required' => true,
                 ]
             )
             ->add('kontrahentNip', TextType::class,

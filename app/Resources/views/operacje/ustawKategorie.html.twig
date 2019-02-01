@@ -49,6 +49,7 @@
     </table>
 
     <form>
+        <label for="kategoria">Wybierz kategorie:</label>
         <select id="kategoria">
             <option value="1">Faktura</option>
             <option value="2">Wynagrodzenia</option>
@@ -61,7 +62,7 @@
         FAKTURA
         {{ form_start(faktura_form) }}
         {{ form_widget(faktura_form) }}
-        <input type="submit" value="Dodaj" />
+        <input type="submit" value="Przypisz kategorie" />
         {{ form_end(faktura_form) }}
     </div>
 
@@ -69,7 +70,7 @@
         WYNAGRODZENIA
         {{ form_start(wynagrodzenie_form) }}
         {{ form_widget(wynagrodzenie_form) }}
-        <input type="submit" value="Dodaj" />
+        <input type="submit" value="Przypisz kategorie" />
         {{ form_end(wynagrodzenie_form) }}
     </div>
 
@@ -81,7 +82,7 @@
         OPLATA BANKOWA
         {{ form_start(oplata_bankowa_form) }}
         {{ form_widget(oplata_bankowa_form) }}
-        <input type="submit" value="Dodaj" />
+        <input type="submit" value="Przypisz kategorie" />
         {{ form_end(oplata_bankowa_form) }}
     </div>
 
